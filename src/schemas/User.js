@@ -8,6 +8,8 @@ const userSchema = mongoose.model({
     image: String,
 });
 
+export default userSchema;
+
 
 
 // {
