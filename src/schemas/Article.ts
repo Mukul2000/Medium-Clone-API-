@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import userSchema from './User';
 
-const articleSchema = mongoose.Schema({
+const articleSchema = new mongoose.Schema({
     slug: String,
     title: String,
     description: String,
