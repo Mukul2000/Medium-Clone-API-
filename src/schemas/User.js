@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-const userSchema = mongoose.model({
+const userSchema = mongoose.Schema({
     email: String,
     // token: String, //do it later when JWT is put up
     username: String,
@@ -8,7 +8,8 @@ const userSchema = mongoose.model({
     image: String,
 });
 
-export default userSchema;
+const User = mongoose.model("User", userSchema);
+module.exports=User;
 
 
 

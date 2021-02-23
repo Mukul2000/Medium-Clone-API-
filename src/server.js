@@ -5,7 +5,8 @@ const usersRoute = require('./routes/users');
 const userRoute = require('./routes/user');
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json()); // support json encoded bodies
 
 app.use("/api/user", userRoute);
 app.use("/api/users", usersRoute);

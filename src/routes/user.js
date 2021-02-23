@@ -4,7 +4,7 @@ const route = express.Router();
 
 //GET current user
 route.get('/', (req, res) => {
-
+    res.send("Hitting /api/user")
 });
 
 //PATCH current user
