@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const createUser = require('../controllers/users.js');
 const User = require('../schemas/User.js');
 
 const route = express.Router();
@@ -11,19 +12,22 @@ route.post('/login', (req,res) => {
 
 // /api/users to register a user
 route.post('/', (req,res) => {
-    // console.log(req.body);
-    // console.log(req.body);
     const username = req.body["user"].username;
     const email = req.body["user"].email;
-    const user = new User({
-        username: username,
-        email: email
-    });
-    console.log(user);
+    const user = createUser(username,email);
     user.save((err) => {
-        if(err) res.send("Could not create user");
-        else res.send("User created successfully");
-    });
+        if(err) res.status(422).json({
+            errors: {
+                body: ['Could not create user'],
+            }
+        });
+        else res.status(201).json({
+            "user": {
+                "email": user.email,
+                "username": user.username
+            }
+        });
+    })
 });
 
 module.exports=route;

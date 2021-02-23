@@ -1,15 +1,25 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    email: String,
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+        dropDups: true
+    },
     // token: String, //do it later when JWT is put up
-    username: String,
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        dropDups: true
+    },
     bio: String,
     image: String,
 });
 
 const User = mongoose.model("User", userSchema);
-module.exports=User;
+module.exports = User;
 
 
 
