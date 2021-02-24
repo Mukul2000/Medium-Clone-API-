@@ -19,3 +19,5 @@ function matchPassword(hash, password) {
         });
     })
 }
+
+module.exports = {hashPassword, matchPassword}; 

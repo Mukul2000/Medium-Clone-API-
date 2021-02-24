@@ -14,8 +14,10 @@ const userSchema = mongoose.Schema({
         required: true,
         dropDups: true
     },
-    bio: String,
-    image: String,
+    // password: {
+    //     type: String,
+    //     required: true,
+    // }
 });
 
 const User = mongoose.model("User", userSchema);
