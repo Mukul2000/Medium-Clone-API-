@@ -14,10 +14,10 @@ const userSchema = mongoose.Schema({
         required: true,
         dropDups: true
     },
-    // password: {
-    //     type: String,
-    //     required: true,
-    // }
+    password: {
+        type: String,
+        required: true,
+    }
 });
 
 const User = mongoose.model("User", userSchema);

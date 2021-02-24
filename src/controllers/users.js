@@ -1,13 +1,17 @@
 const User = require('../schemas/User');
-const {hashPassword, matchPassword} = require('../utils/passwordUtils');
+const passUtils = require( '../utils/passwordUtils');
 
-function createUser(uname, email, password) {
+
+async function createUser(uname, email, password) {
     const user = new User({
         username: uname,
         email: email,
-        // password: await hashPassword(password), 
+        password: await passUtils.hashPassword(password), 
     }); 
-    return user;
+    user.save((err) => {
+        if (err) throw(err);
+        else return user;
+    });
 }
 
 module.exports=createUser;

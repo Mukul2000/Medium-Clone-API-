@@ -14,23 +14,23 @@ route.post('/login', (req, res) => {
 route.post('/', (req, res) => {
     const username = req.body["user"].username;
     const email = req.body["user"].email;
-    const user = createUser(username, email);
-    user.save((err) => {
-        if (err) {
-            console.log("error is here " + err);
-            res.status(422).json({
-                errors: {
-                    body: ['Could not create user', err],
-                }
-            });
-        }
-        else res.status(201).json({
+    const password = req.body["user"].password;
+    try {
+        const user = createUser(username, email, password);
+        res.status(201).json({
             "user": {
                 "email": user.email,
                 "username": user.username
             }
         });
-    })
+    }
+    catch (e) {
+        res.status(422).json({
+            errors: {
+                body: ['Could not create user', err],
+            }
+        });
+    }
 });
 
 module.exports = route;
