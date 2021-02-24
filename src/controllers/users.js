@@ -8,10 +8,7 @@ async function createUser(uname, email, password) {
         email: email,
         password: await passUtils.hashPassword(password), 
     }); 
-    user.save((err) => {
-        if (err) throw(err);
-        else return user;
-    });
+    return user;
 }
 
 module.exports=createUser;
