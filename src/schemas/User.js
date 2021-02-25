@@ -17,7 +17,8 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    token: String,
 });
 
 const User = mongoose.model("User", userSchema);

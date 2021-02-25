@@ -26,3 +26,4 @@ async function decode(token) {
     });
 }
 
+module.exports = {sign,decode};
