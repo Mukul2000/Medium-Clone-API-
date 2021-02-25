@@ -3,12 +3,12 @@ const express = require('express');
 const route = express.Router();
 
 //GET current user
-route.get('/', (req, res) => {
-    res.send("Hitting /api/user")
+route.get('/', async (req, res) => {
+    
 });
 
-//PATCH current user
-route.patch('/', (req, res) => {
+//update current user
+route.patch('/', async (req, res) => {
 
 });
 

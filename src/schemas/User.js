@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
         required: true,
         dropDups: true
     },
-    // token: String, //do it later when JWT is put up
+    token: String,
     username: {
         type: String,
         unique: true,
@@ -18,7 +18,6 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    token: String,
 });
 
 const User = mongoose.model("User", userSchema);

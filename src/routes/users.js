@@ -1,12 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const createUser = require('../controllers/users.js');
+const userControllers = require('../controllers/users.js');
 const User = require('../schemas/User.js');
 
 const route = express.Router();
 // /api/users/login to login user
-route.post('/login', (req, res) => {
-
+route.post('/login', async (req, res) => {
+    try {
+        const email = req.body.user.email;
+        const password =  req.body.user.password;
+        const user = await userControllers.loginUser(email,password);
+        return res.status(200).json({
+            user
+        })
+    }
+    catch(err) {
+        res.status(422).json({
+            errors: {
+                body: ['Login failed', err],
+            }
+        });
+    }
 });
 
 
@@ -17,12 +31,13 @@ route.post('/', async (req, res) => {
     const password = req.body["user"].password;
 
     try {
-        const user = await createUser(username, email, password);
+        const user = await userControllers.createUser(username, email, password);
         user.save();
         res.status(201).json({
             "user": {
                 "email": user.email,
-                "username": user.username
+                "username": user.username,
+                "token": user.token,
             }
         });
     }
@@ -33,27 +48,6 @@ route.post('/', async (req, res) => {
             }
         });
     }
-    // user.save((err) => {
-    //     if (err) {
-    //         res.status(422).json({
-    //             errors: {
-    //                 body: ['Could not create user', err],
-    //             }
-    //         });
-
-    //     }
-    //     else {
-    //         res.status(201).json({
-    //             "user": {
-    //                 "email": user.email,
-    //                 "username": user.username
-    //             }
-    //         });
-    //     }
-    // });
-
-
-
 });
 
 module.exports = route;

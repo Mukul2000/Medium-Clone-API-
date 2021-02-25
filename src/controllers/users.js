@@ -13,11 +13,9 @@ async function createUser(uname, email, password) {
     //right now this is handled by mongoDB itself
     //but error description is non existent, custom code does
     //it better.
-    //TODO: check if user already exiss and throw an 
-    //error if it does.
-    const temp = await User.findOne({email:email, username: uname}).exec();
+    const temp = await User.findOne({ email: email, username: uname }).exec();
 
-    if(temp!==null) throw 'User already exists';
+    if (temp !== null) throw 'User already exists';
 
     //create user and send back
     const user = new User({
@@ -29,4 +27,24 @@ async function createUser(uname, email, password) {
     return user;
 }
 
-module.exports = createUser;
+async function loginUser(email, password) {
+
+    //Check data validity
+    if (!email) throw 'email is empty';
+    if (!password) throw 'password is empty';
+
+    //check if email exists
+    const exists = await User.findOne({email:email}).exec();
+
+    if(exists === null) throw 'No user with this email exists';
+
+    //Check if password matches
+    const passMatch = await passUtils.matchPassword(exists.password, password);
+
+    if(!passMatch) throw 'Wrong Password';
+
+    exists.token = await jwtUtils.sign(exists);
+    return exists;
+}
+
+module.exports = {createUser,loginUser};
