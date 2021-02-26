@@ -47,4 +47,12 @@ async function loginUser(email, password) {
     return exists;
 }
 
-module.exports = {createUser,loginUser};
+async function getUserByEmail(email) {
+    const doc = await User.findOne({email:email}).exec();
+
+    if(doc===null) throw 'no such user';
+
+    return doc;
+}
+
+module.exports = {createUser,loginUser, getUserByEmail};
