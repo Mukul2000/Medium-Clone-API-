@@ -23,8 +23,23 @@ route.get('/', authByToken, async (req, res) => {
 });
 
 //update current user
-route.patch('/', async (req, res) => {
-
+route.patch('/', authByToken, async (req, res) => {
+    try {
+        const updatedUser = await controllers.updateUserDetails(
+            req.body.user.username,
+            req.body.user.password,
+            req.body.user.bio,
+            req.body.user.email
+        );
+        res.status(200).json({
+            updatedUser,
+        });
+    }
+    catch(e) {
+        return res.status(401).json({
+            body: ['Update failed', e],
+        });
+    }
 });
 
 module.exports = route;

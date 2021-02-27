@@ -18,6 +18,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    bio: String,
 });
 
 const User = mongoose.model("User", userSchema);
