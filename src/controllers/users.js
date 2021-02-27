@@ -34,25 +34,36 @@ async function loginUser(email, password) {
     if (!password) throw 'password is empty';
 
     //check if email exists
-    const exists = await User.findOne({email:email}).exec();
+    const exists = await User.findOne({ email: email }).exec();
 
-    if(exists === null) throw 'No user with this email exists';
+    if (exists === null) throw 'No user with this email exists';
 
     //Check if password matches
     const passMatch = await passUtils.matchPassword(exists.password, password);
 
-    if(!passMatch) throw 'Wrong Password';
+    if (!passMatch) throw 'Wrong Password';
 
     exists.token = await jwtUtils.sign(exists);
     return exists;
 }
 
 async function getUserByEmail(email) {
-    const doc = await User.findOne({email:email}).exec();
+    const doc = await User.findOne({ email: email }).exec();
 
-    if(doc===null) throw 'no such user';
+    if (doc === null) throw 'no such user';
 
     return doc;
 }
 
-module.exports = {createUser,loginUser, getUserByEmail};
+async function updateUserDetails(username, password, bio, email) {
+    const user = await User.findOne({ email: email });
+
+    if (bio) user.bio = bio;
+    if (username) user.username = username;
+    if (password) user.password = await passUtils.hashPassword(password);
+
+    user.save();
+    return user;
+}
+
+module.exports = { createUser, loginUser, getUserByEmail, updateUserDetails};
