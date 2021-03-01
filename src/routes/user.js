@@ -24,12 +24,13 @@ route.get('/', authByToken, async (req, res) => {
 
 //update current user
 route.patch('/', authByToken, async (req, res) => {
+    console.log(req.user.email);
     try {
         const updatedUser = await controllers.updateUserDetails(
             req.body.user.username,
             req.body.user.password,
             req.body.user.bio,
-            req.body.user.email
+            req.user.email
         );
         res.status(200).json({
             updatedUser,
