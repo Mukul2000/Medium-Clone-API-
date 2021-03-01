@@ -1,6 +1,7 @@
 const express = require('express');
 const authByToken = require('../middlewares/auth');
 const controllers = require('../controllers/articles');
+const { decode } = require('jsonwebtoken');
 const route = express.Router();
 
 // GET /api/articles get all articles
@@ -45,8 +46,20 @@ route.patch('/', async (req, res) => {
 
 
 //DELETE /api/articles/:slug Delete article by slug
-route.delete('/:slug', async (req, res) => {
-
+route.delete('/:slug', authByToken, async (req, res) => {
+    console.log(req.params.slug);
+    try {
+        const article = await controllers.deleteArticle(req.params.slug, req.user.email);
+        res.status(200).json({
+            "body": "Deleted successfully",
+            article,
+        });
+    }
+    catch(e) {
+        res.status(400).json({
+            "errors": ["Unsuccesful delete", e],
+        });
+    }
 })
 
 module.exports = route;

@@ -36,7 +36,15 @@ async function createArticle(title, description, body, tagList, user_email) {
 }
 
 //String
-async function deleteArticle(slug) { }
+async function deleteArticle(slug, email) {
+    const user = await User.findOne({email: email});
+    const article = await Article.findOne({ slug: slug, author: user._id });
+    console.log(article);
+    console.log(user);
+    if (article === null) throw 'This user has no article with this slug';
+
+    article.remove();
+}
 
 //String String String String String[]
 async function updateArticle(slug, title, description, body, tags) { }
