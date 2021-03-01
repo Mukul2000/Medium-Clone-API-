@@ -1,19 +1,30 @@
-import mongoose from 'mongoose';
-import userSchema from './User';
+const User = require('./User');
+const mongoose = require('mongoose');
 
 const articleSchema = mongoose.Schema({
-    slug: String,
-    title: String,
+    slug: {
+        type: String,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+    },
     description: String,
-    body: String,
+    body: {
+        type: String,
+        required: true,
+    },
     createdAt: Date,
     updatedAt: Date,
-    // tagList: [], //relationship with tags
+    tagList: [], //relationship with tags
     // favorited: String, //relationship with user
     // favoritesCount: Number,
-    author: userSchema,
+    author: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'User',
+        required: true,
+    },
 });
 
 const Article = mongoose.model("Article", articleSchema);
-
-export default Article;
+module.exports = Article;
