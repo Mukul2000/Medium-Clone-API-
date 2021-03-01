@@ -1,7 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const userControllers = require('../controllers/users.js');
-const User = require('../schemas/User.js');
+
 
 const route = express.Router();
 // /api/users/login to login user
