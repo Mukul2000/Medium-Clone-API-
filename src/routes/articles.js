@@ -6,7 +6,17 @@ const route = express.Router();
 
 // GET /api/articles get all articles
 route.get("/", async (req, res) => {
-
+    try {
+        const articles = await controllers.getAllArticles();
+        res.status(200).json(
+            [articles]
+        );
+    }
+    catch(e) {
+        res.status(401).json({
+            body: ["Could not fetch articles at this time", e],
+        });
+    }
 });
 
 //GET /api/articles feed

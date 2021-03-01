@@ -51,7 +51,8 @@ async function updateArticle(slug, title, description, body, tags) { }
 
 
 async function getAllArticles() {
-
+    const articles = Article.find({});
+    return articles;
 }
 
 //Personalised feed, need the email
