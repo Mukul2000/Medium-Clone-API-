@@ -62,7 +62,12 @@ async function getFeedArticles(email) {
 }
 
 //String
-async function getArticleBySlug(slug) { }
+async function getArticleBySlug(slug) {
+    const article = Article.findOne({slug: slug});
+    // console.log(article);
+    if(article === null) throw 'No article found!';
+    return article;
+ }
 
 
 module.exports = { createArticle, deleteArticle, updateArticle, getAllArticles, getFeedArticles, getArticleBySlug };

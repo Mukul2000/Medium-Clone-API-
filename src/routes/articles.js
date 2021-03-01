@@ -27,7 +27,17 @@ route.get('/feed', authByToken, async (req, res) => {
 
 //GET /api/articles/:slug article by slug.
 route.get('/:slug', async (req, res) => {
-
+    try {
+        const article = await controllers.getArticleBySlug(req.params.slug);
+        res.status(201).json({article});
+    }
+    catch (e) {
+        res.status(422).json({
+            errors: {
+                body: ['Could not find article', e],
+            }
+        })
+    }
 });
 
 //POST /api/articles create a new article
@@ -45,7 +55,7 @@ route.post('/', authByToken, async (req, res) => {
             errors: {
                 body: ['Could not create article', e],
             }
-        })
+        });
     }
 });
 
