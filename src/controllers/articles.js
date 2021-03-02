@@ -16,7 +16,7 @@ async function createArticle(title, description, body, tagList, user_email) {
             description: description,
             body: body
         });
-        // if(tagList) article.tagList = tagList;
+        if(tagList) article.tagList = tagList;
 
         //Check if the author exists
         const user = await User.findOne({ email: user_email });
@@ -37,7 +37,7 @@ async function createArticle(title, description, body, tagList, user_email) {
 
 //String
 async function deleteArticle(slug, email) {
-    const user = await User.findOne({email: email});
+    const user = await User.findOne({ email: email });
     const article = await Article.findOne({ slug: slug, author: user._id });
     console.log(article);
     console.log(user);
@@ -47,7 +47,26 @@ async function deleteArticle(slug, email) {
 }
 
 //String String String String String[]
-async function updateArticle(slug, title, description, body, tags) { }
+async function updateArticle(slug, title, description, body, tags, email) {
+    const user = await User.findOne({email: email}); //get user which requested this update
+    const article = await Article.findOne({slug: slug}); //get article by slug
+    if(article === null) throw 'No such article';
+
+    const id1 = String(user._id);
+    const id2 = String(article.author);
+
+    if(id1 !== id2) throw 'This user has not authored this article';
+
+    if(title) 
+        article.slug = slugify(title);
+    if(description) 
+        article.description = description;
+    if(body) 
+        article.body = body;
+    
+    (await article).save();
+    return article;
+ }
 
 
 async function getAllArticles() {
@@ -63,11 +82,12 @@ async function getFeedArticles(email) {
 
 //String
 async function getArticleBySlug(slug) {
-    const article = Article.findOne({slug: slug});
+    const article = Article.findOne({ slug: slug });
     // console.log(article);
-    if(article === null) throw 'No article found!';
+    if (article === null) throw 'No article found!';
     return article;
- }
+}
 
 
-module.exports = { createArticle, deleteArticle, updateArticle, getAllArticles, getFeedArticles, getArticleBySlug };
+module.exports = { createArticle, deleteArticle, updateArticle, 
+    getAllArticles, getFeedArticles, getArticleBySlug };

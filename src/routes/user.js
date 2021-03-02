@@ -24,7 +24,6 @@ route.get('/', authByToken, async (req, res) => {
 
 //update current user
 route.patch('/', authByToken, async (req, res) => {
-    console.log(req.user.email);
     try {
         const updatedUser = await controllers.updateUserDetails(
             req.body.user.username,

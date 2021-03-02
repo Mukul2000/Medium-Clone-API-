@@ -60,8 +60,20 @@ route.post('/', authByToken, async (req, res) => {
 });
 
 //PATCH /api/articles/:slug Update article by slug
-route.patch('/', async (req, res) => {
-
+route.patch('/:slug', authByToken, async (req, res) => {
+    try { 
+    const updatedArticle = await controllers.updateArticle(req.params.slug, req.body.article.title,
+                                                req.body.article.description, req.body.article.body, 
+                                                req.body.article.tags, req.user.email);
+    res.status(200).json({ updatedArticle });
+    }
+    catch(e) {
+        res.status(422).json({
+            errors: {
+                body: ['Could not update article', e],
+            }
+        });
+    }
 });
 
 
