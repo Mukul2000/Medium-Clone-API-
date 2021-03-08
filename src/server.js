@@ -17,5 +17,5 @@ app.listen(3000, () => {
     console.log("Server started on port 3000...");
 })
 
-mongoose.connect("mongodb://localhost:27017/mediumDB", {useNewUrlParser:true, useUnifiedTopology:true, useCreateIndex:true});
+mongoose.connect("mongodb+srv://admin_mukul:righthandmiddlefingertop@conduitcluster.aca6i.mongodb.net/mediumDB", { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
