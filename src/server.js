@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const usersRoute = require('./routes/users');
 const userRoute = require('./routes/user');
 const articleRoute = require('./routes/articles');
@@ -12,6 +13,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use("/api/articles", articleRoute);
 app.use("/api/user", userRoute);
 app.use("/api/users", usersRoute);
+app.use(cors());
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server started on port 3000...");
