@@ -2,6 +2,8 @@
 API from scratch for a medium clone
 This is my implementation of the API specified at [Real world API][http://realworld.io] (API documentation in /api folder).
 
+You can make API requests to : https://conduit-medium-clone-api.herokuapp.com/
+
 ## Technologies used : 
 1. NodeJS - Platform
 2. Javscript - Programming Language
