@@ -10,10 +10,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // support json encoded bodies
 
+app.use(cors({credentials: true, origin: true}));
 app.use("/api/articles", articleRoute);
 app.use("/api/user", userRoute);
 app.use("/api/users", usersRoute);
-app.use(cors());
+
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server started on port 3000...");
