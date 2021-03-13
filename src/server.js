@@ -6,7 +6,9 @@ const usersRoute = require('./routes/users');
 const userRoute = require('./routes/user');
 const articleRoute = require('./routes/articles');
 const app = express();
-app.use(cors());
+app.use((req,res,next) => {
+	res.headers("Access-Control-Allow-Origin","*");
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // support json encoded bodies
