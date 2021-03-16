@@ -70,7 +70,7 @@ async function updateArticle(slug, title, description, body, tags, email) {
 
 
 async function getAllArticles() {
-    const articles = Article.find({});
+    const articles = await Article.find({});
     for(i = 0; i < articles.length; i++) {
         const full_author = await User.findById(articles[i].author);
         articles[i].author = full_author;
